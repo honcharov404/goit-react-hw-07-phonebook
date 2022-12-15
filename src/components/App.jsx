@@ -6,7 +6,7 @@ import ContactList from './ContactList/ContactList';
 import ContactForm from './ContactForm/ContactForm';
 import Loader from './Loader/Loader';
 
-import { setFilter } from '../redux/filterSlice/filterSlice';
+import { setFilter } from '../redux/filterSlice/filterSlice2';
 import {
   addContactRequest,
   contactsRequest,
