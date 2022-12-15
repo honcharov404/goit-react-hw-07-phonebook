@@ -10,7 +10,7 @@ import {
   addContactRequest,
   contactsRequest,
   deleteContactRequest,
-} from 'redux/contactsSlice/operations';
+} from '../redux/contactsSlice/operations';
 import { useEffect } from 'react';
 import Loader from './Loader/Loader';
 
