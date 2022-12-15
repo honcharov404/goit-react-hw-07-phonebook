@@ -1,23 +1,33 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  addContact,
-  deleteContact,
-} from '../Redux/ContactsSlice/ContactsSlice';
-
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 import ContactForm from './ContactForm/ContactForm';
 
 import s from './App.module.css';
-import { setFilter } from '../Redux/FilterSlice/FilterSlice';
+import { setFilter } from '../redux/filterSlice/filterSlice';
+import {
+  addContactRequest,
+  contactsRequest,
+  deleteContactRequest,
+} from 'redux/contactsSlice/operations';
+import { useEffect } from 'react';
+import Loader from './Loader/Loader';
 
 export const App = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
+  const {
+    items: contacts,
+    isLoading,
+    error,
+  } = useSelector(state => state.contacts.contacts);
   const filter = useSelector(state => state.filter.filter);
   const dispatch = useDispatch();
 
-  const onAddContact = (name, number) => {
+  useEffect(() => {
+    dispatch(contactsRequest());
+  }, [dispatch]);
+
+  const onAddContact = (name, phone) => {
     if (
       contacts.find(
         contact => contact.name.toLowerCase() === name.toLowerCase()
@@ -27,11 +37,11 @@ export const App = () => {
       return;
     }
 
-    dispatch(addContact({ name, number }));
+    dispatch(addContactRequest({ name, phone }));
   };
 
   const onDeleteContact = contactId => {
-    dispatch(deleteContact(contactId.target.value));
+    dispatch(deleteContactRequest(contactId.target.value));
   };
 
   const onSetFilter = e => {
@@ -52,10 +62,15 @@ export const App = () => {
       <ContactForm addContact={onAddContact} />
       <h2 className={s.title}>Contacts</h2>
       <Filter filter={filter} setFilter={onSetFilter} />
-      <ContactList
-        contacts={filterContacts()}
-        deleteContact={onDeleteContact}
-      />
+      {error && <p>Upss, Some error occured... {error}</p>}
+      {!isLoading ? (
+        <ContactList
+          contacts={filterContacts()}
+          deleteContact={onDeleteContact}
+        />
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };
