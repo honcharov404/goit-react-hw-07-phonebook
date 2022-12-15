@@ -1,18 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 import ContactForm from './ContactForm/ContactForm';
+import Loader from './Loader/Loader';
 
-import s from './App.module.css';
 import { setFilter } from '../redux/filterSlice/filterSlice';
 import {
   addContactRequest,
   contactsRequest,
   deleteContactRequest,
 } from '../redux/contactsSlice/operations';
-import { useEffect } from 'react';
-import Loader from './Loader/Loader';
+
+import s from './App.module.css';
 
 export const App = () => {
   const {

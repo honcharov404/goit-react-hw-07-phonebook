@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ContactListItem from 'components/ContactListItem/ContactListItem';
+import ContactListItem from '../components/ContactListItem/ContactListItem';
 
 import s from './ContactList.module.css';
 
